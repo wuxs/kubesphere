@@ -27,6 +27,7 @@ import (
 	"gopkg.in/yaml.v2"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/klog"
+	"kubesphere.io/kubesphere/pkg/simple/client/edgewize"
 
 	networkv1alpha1 "kubesphere.io/api/network/v1alpha1"
 
@@ -178,6 +179,7 @@ type Config struct {
 	GatewayOptions        *gateway.Options        `json:"gateway,omitempty" yaml:"gateway,omitempty" mapstructure:"gateway"`
 	GPUOptions            *gpu.Options            `json:"gpu,omitempty" yaml:"gpu,omitempty" mapstructure:"gpu"`
 	TerminalOptions       *terminal.Options       `json:"terminal,omitempty" yaml:"terminal,omitempty" mapstructure:"terminal"`
+	EdgeWizeOptions       *edgewize.Options       `json:"edgewize,omitempty" yaml:"edgewize,omitempty" mapstructure:"edgewize"`
 }
 
 // newConfig creates a default non-empty Config
@@ -207,6 +209,7 @@ func New() *Config {
 		GatewayOptions:        gateway.NewGatewayOptions(),
 		GPUOptions:            gpu.NewGPUOptions(),
 		TerminalOptions:       terminal.NewTerminalOptions(),
+		EdgeWizeOptions:       edgewize.NewEdgeWizeOptions(),
 	}
 }
 
@@ -361,6 +364,9 @@ func (conf *Config) stripEmptyOptions() {
 
 	if conf.GPUOptions != nil && len(conf.GPUOptions.Kinds) == 0 {
 		conf.GPUOptions = nil
+	}
+	if conf.EdgeWizeOptions != nil && conf.EdgeWizeOptions.Endpoint == "" {
+		conf.EdgeWizeOptions = nil
 	}
 }
 

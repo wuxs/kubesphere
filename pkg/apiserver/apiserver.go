@@ -71,6 +71,7 @@ import (
 	"kubesphere.io/kubesphere/pkg/kapis/crd"
 	kapisdevops "kubesphere.io/kubesphere/pkg/kapis/devops"
 	edgeruntimev1alpha1 "kubesphere.io/kubesphere/pkg/kapis/edgeruntime/v1alpha1"
+	edgewizev1alpha1 "kubesphere.io/kubesphere/pkg/kapis/edgewize/v1alpha1"
 	gatewayv1alpha1 "kubesphere.io/kubesphere/pkg/kapis/gateway/v1alpha1"
 	iamapi "kubesphere.io/kubesphere/pkg/kapis/iam/v1alpha2"
 	kubeedgev1alpha1 "kubesphere.io/kubesphere/pkg/kapis/kubeedge/v1alpha1"
@@ -270,6 +271,7 @@ func (s *APIServer) installKubeSphereAPIs(stopCh <-chan struct{}) {
 		s.KubernetesClient.KubeSphere()))
 	urlruntime.Must(notificationkapisv2beta2.AddToContainer(s.container, s.Config.NotificationOptions))
 	urlruntime.Must(gatewayv1alpha1.AddToContainer(s.container, s.Config.GatewayOptions, s.RuntimeCache, s.RuntimeClient, s.InformerFactory, s.KubernetesClient.Kubernetes(), s.LoggingClient))
+	urlruntime.Must(edgewizev1alpha1.AddToContainer(s.container, s.Config.EdgeWizeOptions.Endpoint))
 }
 
 // installCRDAPIs Install CRDs to the KAPIs with List and Get options

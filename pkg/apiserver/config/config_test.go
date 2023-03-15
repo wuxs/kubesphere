@@ -25,6 +25,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"gopkg.in/yaml.v2"
+	"kubesphere.io/kubesphere/pkg/simple/client/edgewize"
 
 	networkv1alpha1 "kubesphere.io/api/network/v1alpha1"
 
@@ -196,6 +197,9 @@ func newTestConfig() (*Config, error) {
 		TerminalOptions: &terminal.Options{
 			Image:   "alpine:3.15",
 			Timeout: 600,
+		},
+		EdgeWizeOptions: &edgewize.Options{
+			Endpoint: "http://edgewize-apiserver.edgewize-system.svc:9090",
 		},
 	}
 	return conf, nil
